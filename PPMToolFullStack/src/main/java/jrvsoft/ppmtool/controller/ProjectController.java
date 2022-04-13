@@ -6,12 +6,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,10 +27,17 @@ public class ProjectController {
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
 
         if(result.hasErrors()){
-            return new ResponseEntity<String>("Invalid object", HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<Project>(projectService.saveOrUpdate(project), HttpStatus.CREATED);
+            Map<String, String> errorMap = new HashMap<>();
+
+            for(FieldError fieldError : result.getFieldErrors()) {
+                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
         }
+
+
+        return new ResponseEntity<Project>(projectService.saveOrUpdate(project), HttpStatus.CREATED);
+
     }
 
 }
