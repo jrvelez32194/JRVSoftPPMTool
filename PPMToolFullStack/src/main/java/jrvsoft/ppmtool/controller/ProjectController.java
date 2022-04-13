@@ -16,11 +16,12 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/project")
 public class ProjectController {
+
     private final ProjectService projectService;
 
-    @PostMapping("")
-    public ResponseEntity<Project> createNewProject(@RequestBody @Valid Project project){
-        return new ResponseEntity<Project>(project, HttpStatus.CREATED);
+    @PostMapping()
+    public ResponseEntity<Project> createNewProject(@RequestBody Project project){
+        return new ResponseEntity<Project>(projectService.saveOrUpdate(project), HttpStatus.CREATED);
     }
 
 }
