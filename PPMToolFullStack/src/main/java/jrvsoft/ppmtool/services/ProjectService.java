@@ -9,4 +9,5 @@ public interface ProjectService {
     public Project saveOrUpdate(Project project);
     public Optional<Project> findByProjectIdentifier(String projectIdentifier);
     public List<Project> listOfProject();
+    public void deleteProject(String projectIdentifier);
 }
