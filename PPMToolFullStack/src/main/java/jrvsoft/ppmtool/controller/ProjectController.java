@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,5 +37,8 @@ public class ProjectController {
     public ResponseEntity<?> getProjectByProjectIdentifier(@PathVariable String projectIdentifier){
         return new ResponseEntity<Project>(projectService.findByProjectIdentifier(projectIdentifier).get(), HttpStatus.OK);
     }
+
+    @GetMapping("/list")
+    public List<Project> listOfProject(){return projectService.listOfProject();}
 
 }
