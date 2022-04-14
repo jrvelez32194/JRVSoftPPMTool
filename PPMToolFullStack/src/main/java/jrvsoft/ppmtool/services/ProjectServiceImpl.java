@@ -2,10 +2,12 @@ package jrvsoft.ppmtool.services;
 
 import jrvsoft.ppmtool.domain.Project;
 import jrvsoft.ppmtool.exception.Exception;
-import jrvsoft.ppmtool.repositories.ProjectRepo;
+import jrvsoft.ppmtool.repositories.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -13,13 +15,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
-    private final ProjectRepo projectRepo;
+    private final ProjectRepository projectRepository;
 
     @Override
     public Project saveOrUpdate(Project project) {
-        if(projectRepo.findByProjectIdentifier(project.getProjectIdentifier()).isPresent()){
-            throw new Exception("Project Identifier " + project.getProjectIdentifier() + " is Already Exist");
+        project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+        // checking if exist
+        if(projectRepository.findByProjectIdentifier(project.getProjectIdentifier()).isPresent()){
+            throw new Exception("Project Identifier " + project.getProjectIdentifier() + " already exist");
         }
-        return projectRepo.save(project);
+        return projectRepository.save(project);
+    }
+
+    @Override
+    public Optional<Project> findByProjectIdentifier(String projectIdentifier) {
+        Optional<Project> project = projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
+        if(!project.isPresent()){
+            throw new Exception("Project Identifier " + projectIdentifier + " is not found");
+        }
+        return project;
     }
 }
