@@ -6,19 +6,22 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import AddProject from "./component/Project/AddProject";
 import { Provider } from "react-redux";
 import store from "./store";
+import React from 'react';
 
-function App() {
-  return (
-    <Provider store={store}>
-      <Router>
-        <div className="App">
-          <Header />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/addProject" component={AddProject} />
-        </div>
-      </Router>
-    </Provider>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <Header />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/addProject" component={AddProject} />
+          </div>
+        </Router>
+      </Provider>
+    );
+  }
 }
 
 export default App;
