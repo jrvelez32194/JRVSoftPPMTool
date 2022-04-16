@@ -8,7 +8,7 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_PROJECTS:
-      return { ...state, project: action.payload };
+      return { ...state, projects: action.payload };
 
     default:
       return state;

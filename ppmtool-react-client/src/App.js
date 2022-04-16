@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import AddProject from "./component/Project/AddProject";
 import { Provider } from "react-redux";
 import store from "./store";
-import React from 'react';
+import React from "react";
 
 class App extends React.Component {
   render() {
