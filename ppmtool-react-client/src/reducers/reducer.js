@@ -1,17 +1,13 @@
-import { GET_PROJECTS, GET_PROJECT } from "../actions/types";
+import { GET_ERRORS, GET_PROJECTS } from "../actions/types";
 
-const initialState = {
-  projects: [],
-  project: {},
-};
+const initialState = {};
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case GET_ERRORS:
+      return action.payload;
     case GET_PROJECTS:
       return { ...state, projects: action.payload };
-    case GET_PROJECT:
-      return { ...state, project: action.payload };
-
     default:
       return state;
   }
