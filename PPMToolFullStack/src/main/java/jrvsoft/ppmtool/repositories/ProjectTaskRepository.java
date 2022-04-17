@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface ProjectTaskRepository extends JpaRepository<ProjectTask, Long> {
     List<ProjectTask> findByProjectIdentifierOrderByPriority(String projectIdentifier);
+    ProjectTask  findByProjectSequence(String projectSequence);
 }

@@ -56,4 +56,10 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
         projectService.findByProjectIdentifier(projectIdentifier);
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
     }
+
+    @Override
+    public ProjectTask getProjectTask(String projectIdentifier, String projectSequence) {
+        projectService.findByProjectIdentifier(projectIdentifier);
+        return projectTaskRepository.findByProjectSequence(projectSequence);
+    }
 }

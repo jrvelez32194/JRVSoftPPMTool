@@ -8,4 +8,5 @@ import java.util.List;
 public interface ProjectTaskService {
 public ProjectTask addProject(String projectIdentifier, ProjectTask projectTask);
 public Iterable<ProjectTask> listOfProjectTask(String projectIdentifier);
+public ProjectTask getProjectTask(String projectIdentifier, String projectSequence);
 }
