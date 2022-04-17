@@ -22,9 +22,9 @@ public class ProjectServiceImpl implements ProjectService {
     public Project saveOrUpdate(Project project) {
         project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
         // checking if exist
-        if(projectRepository.findByProjectIdentifier(project.getProjectIdentifier()).isPresent()){
-            throw new Exception("Project Identifier " + project.getProjectIdentifier() + " already exist");
-        }
+//        if(projectRepository.findByProjectIdentifier(project.getProjectIdentifier()).isPresent()){
+//            throw new Exception("Project Identifier " + project.getProjectIdentifier() + " already exist");
+//        }
         return projectRepository.save(project);
     }
 
