@@ -3,6 +3,8 @@ package jrvsoft.ppmtool.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -20,7 +22,8 @@ public class Backlog {
     private Project project;
 
     // One to Many with project task
-
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "backlog")
+    List<ProjectTask> projectTaskList = new ArrayList<>();
 
     public Backlog() {
     }
@@ -55,5 +58,13 @@ public class Backlog {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public List<ProjectTask> getProjectTaskList() {
+        return projectTaskList;
+    }
+
+    public void setProjectTaskList(List<ProjectTask> projectTaskList) {
+        this.projectTaskList = projectTaskList;
     }
 }
