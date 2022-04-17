@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Transactional
@@ -46,7 +47,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     }
 
     @Override
-    public List<ProjectTask> listOfProjectTask() {
-        return projectTaskRepository.findAll();
+    public List<ProjectTask> listOfProjectTask(String projectIdentifier) {
+        return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
     }
 }

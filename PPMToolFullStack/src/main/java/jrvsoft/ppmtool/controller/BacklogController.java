@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -25,14 +26,17 @@ public class BacklogController {
     @PostMapping("/{projectIdentifier}")
     public ResponseEntity<?> addProjectTask(@PathVariable String projectIdentifier,
                                             @Valid @RequestBody ProjectTask projectTask,
-                                            BindingResult result){
+                                            BindingResult result) {
 
         ResponseEntity<?> errorMap = mapValidationErrorService.getMapValidationError(result);
-        if(errorMap!=null) return errorMap;
+        if (errorMap != null) return errorMap;
 
         return new ResponseEntity<ProjectTask>(projectTaskService.addProject(projectIdentifier, projectTask), HttpStatus.CREATED);
     }
-    @GetMapping("/list")
-    public List<ProjectTask> listOfProjectTask(){return projectTaskService.listOfProjectTask();}
+
+    @GetMapping("/list/{projectIdentifier}")
+    public Iterable<ProjectTask> listOfProjectTask(@PathVariable String projectIdentifier) {
+        return projectTaskService.listOfProjectTask(projectIdentifier);
+    }
 
 }
