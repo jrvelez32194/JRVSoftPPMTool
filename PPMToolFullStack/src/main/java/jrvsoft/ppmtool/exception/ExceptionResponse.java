@@ -2,17 +2,17 @@ package jrvsoft.ppmtool.exception;
 
 public class ExceptionResponse {
 
-    private String projectIdentifier;
+    private String message;
 
-    public ExceptionResponse(String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
+    public ExceptionResponse(String message) {
+        this.message = message;
     }
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
+    public String getMessage() {
+        return message;
     }
 
-    public void setpProjectIdentifier(String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

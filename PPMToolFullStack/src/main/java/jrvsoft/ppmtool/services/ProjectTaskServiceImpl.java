@@ -2,6 +2,7 @@ package jrvsoft.ppmtool.services;
 
 import jrvsoft.ppmtool.domain.Backlog;
 import jrvsoft.ppmtool.domain.ProjectTask;
+import jrvsoft.ppmtool.exception.Exception;
 import jrvsoft.ppmtool.repositories.BacklogRepository;
 import jrvsoft.ppmtool.repositories.ProjectTaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,15 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
 
     private final BacklogRepository backlogRepository;
     private final ProjectTaskRepository projectTaskRepository;
+    private final ProjectService projectService;
 
     @Override
     public ProjectTask addProject(String projectIdentifier, ProjectTask projectTask) {
 
         Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+        if (backlog == null) {
+            throw new Exception("Project Identifier not found");
+        }
         projectTask.setBacklog(backlog);
 
         Integer backlogSequence = backlog.getPTSequence();
@@ -48,6 +53,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
 
     @Override
     public List<ProjectTask> listOfProjectTask(String projectIdentifier) {
+        projectService.findByProjectIdentifier(projectIdentifier);
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
     }
 }

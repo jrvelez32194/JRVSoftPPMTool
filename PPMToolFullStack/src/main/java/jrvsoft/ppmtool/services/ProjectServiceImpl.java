@@ -30,7 +30,11 @@ public class ProjectServiceImpl implements ProjectService {
         String identifier = project.getProjectIdentifier().toUpperCase();
         project.setProjectIdentifier(identifier);
         if (project.getId() == null) {
-            log.info("test backlog");
+
+            if(projectRepository.findByProjectIdentifier(project.getProjectIdentifier()).isPresent()) {
+                throw new Exception("Already Exist");
+            }
+
             Backlog backlog = new Backlog();
             project.setBacklog(backlog);
             backlog.setProject(project);

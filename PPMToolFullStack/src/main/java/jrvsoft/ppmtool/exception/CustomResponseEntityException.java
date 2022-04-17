@@ -17,6 +17,6 @@ public class CustomResponseEntityException extends ResponseEntityExceptionHandle
     @ExceptionHandler
     public final ResponseEntity<Object> handleException(Exception ex, WebRequest webRequest){
         ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
-        return  new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+            return  new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
