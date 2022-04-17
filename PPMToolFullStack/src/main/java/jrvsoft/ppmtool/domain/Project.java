@@ -10,8 +10,6 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table
-
 public class Project {
 
     @Id
@@ -36,6 +34,10 @@ public class Project {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updatedAt;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    private Backlog backlog;
+
+
     @PrePersist
     protected void onCreate(){
         this.createdAt = new Date();
@@ -48,18 +50,6 @@ public class Project {
 
     public Project() {
     }
-
-    public Project(Long id, String projectName, String projectIdentifier, String description, Date startDate, Date endDate, Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.projectName = projectName;
-        this.projectIdentifier = projectIdentifier;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
 
     public Long getId() {
         return id;
@@ -123,6 +113,14 @@ public class Project {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 
     @Override
