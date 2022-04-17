@@ -64,8 +64,8 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
 
         ProjectTask projectTask = getProjectTaskByProjectSequence(projectSequence);
 
-        if(!ObjectUtils.nullSafeEquals(projectIdentifier, projectTask.getProjectIdentifier())) {
-            throw new Exception("Invalid Project Identifier '"+ projectIdentifier+"'");
+        if (!ObjectUtils.nullSafeEquals(projectIdentifier, projectTask.getProjectIdentifier())) {
+            throw new Exception("Invalid Project Identifier '" + projectIdentifier + "'");
         }
 
         return projectTaskRepository.findByProjectSequence(projectSequence);
@@ -74,8 +74,8 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     @Override
     public ProjectTask getProjectTaskByProjectSequence(String projectSequence) {
         ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence);
-        if(ObjectUtils.isEmpty(projectTask)){
-            throw new Exception("Project Task  with ID '"+ projectSequence+"' does not exist");
+        if (ObjectUtils.isEmpty(projectTask)) {
+            throw new Exception("Project Task  with ID '" + projectSequence + "' does not exist");
         }
         return projectTask;
     }
@@ -87,6 +87,15 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
         getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence);
 
         // do save
-        return  projectTaskRepository.save(updateProjectTask);
+        return projectTaskRepository.save(updateProjectTask);
+    }
+
+    @Override
+    public void deleteProjectTask(String projectIdentifier, String projectSequence) {
+
+        // check if project task does exist under projectIdentifier
+        ProjectTask projectTask = getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence);
+
+        projectTaskRepository.delete(projectTask);
     }
 }
