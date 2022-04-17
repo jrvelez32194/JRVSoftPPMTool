@@ -60,6 +60,13 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     @Override
     public ProjectTask getProjectTask(String projectIdentifier, String projectSequence) {
         projectService.findByProjectIdentifier(projectIdentifier);
+        ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence);
+        if(ObjectUtils.isEmpty(projectTask)){
+            throw new Exception("Project Task  with ID '"+ projectSequence+"' does not exist");
+        }
+        if(!ObjectUtils.nullSafeEquals(projectIdentifier, projectTask.getProjectIdentifier())) {
+            throw new Exception("Invalid Project Identifier '"+ projectIdentifier+"'");
+        }
         return projectTaskRepository.findByProjectSequence(projectSequence);
     }
 }
