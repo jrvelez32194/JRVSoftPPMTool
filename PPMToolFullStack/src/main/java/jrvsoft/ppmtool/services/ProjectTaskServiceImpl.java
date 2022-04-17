@@ -58,15 +58,35 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     }
 
     @Override
-    public ProjectTask getProjectTask(String projectIdentifier, String projectSequence) {
+    public ProjectTask getProjectTaskByProjectIdentifierByProjectSequence(String projectIdentifier, String projectSequence) {
+
         projectService.findByProjectIdentifier(projectIdentifier);
+
+        ProjectTask projectTask = getProjectTaskByProjectSequence(projectSequence);
+
+        if(!ObjectUtils.nullSafeEquals(projectIdentifier, projectTask.getProjectIdentifier())) {
+            throw new Exception("Invalid Project Identifier '"+ projectIdentifier+"'");
+        }
+
+        return projectTaskRepository.findByProjectSequence(projectSequence);
+    }
+
+    @Override
+    public ProjectTask getProjectTaskByProjectSequence(String projectSequence) {
         ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence);
         if(ObjectUtils.isEmpty(projectTask)){
             throw new Exception("Project Task  with ID '"+ projectSequence+"' does not exist");
         }
-        if(!ObjectUtils.nullSafeEquals(projectIdentifier, projectTask.getProjectIdentifier())) {
-            throw new Exception("Invalid Project Identifier '"+ projectIdentifier+"'");
-        }
-        return projectTaskRepository.findByProjectSequence(projectSequence);
+        return projectTask;
+    }
+
+    @Override
+    public ProjectTask updateByProject(ProjectTask updateProjectTask, String projectIdentifier, String projectSequence) {
+
+        // check if project task does exist under projectIdentifier
+        getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence);
+
+        // do save
+        return  projectTaskRepository.save(updateProjectTask);
     }
 }
