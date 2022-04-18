@@ -5,10 +5,13 @@ class Backlog extends Component {
   render() {
     const { project_tasks_prop } = this.props;
 
-    const tasks = project_tasks_prop.map((project_task) => (
-      <ProjectTask key={project_task.id} project_task={project_task} />
-    ));
-
+    function task(taskStatus) {
+      return project_tasks_prop
+        .filter((project_task) => project_task.status === taskStatus)
+        .map((project_task) => (
+          <ProjectTask key={project_task.id} project_task={project_task} />
+        ));
+    }
     return (
       <div className="container">
         <div className="row">
@@ -21,7 +24,7 @@ class Backlog extends Component {
             {
               // insert todo task here
             }
-            {tasks}
+            {task("TO_DO")}
           </div>
           <div className="col-md-4">
             <div className="card text-center mb-2">
@@ -30,6 +33,7 @@ class Backlog extends Component {
               </div>
             </div>
             {
+              task("IN_PROGRESS")
               //<!-- SAMPLE PROJECT TASK STARTS HERE -->
               // <!-- SAMPLE PROJECT TASK ENDS HERE -->
             }
@@ -41,6 +45,7 @@ class Backlog extends Component {
               </div>
             </div>
             {
+              task("DONE")
               // <!-- SAMPLE PROJECT TASK STARTS HERE -->
               // <!-- SAMPLE PROJECT TASK ENDS HERE -->
             }
