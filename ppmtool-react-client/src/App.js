@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import store from "./store";
 import React from "react";
 import UpdateProject from "./component/Project/UpdateProject";
+import ProjectBoard from "./component/ProjectBoard/ProjectBoard";
+import AddProjectTask from "./component/ProjectBoard/ProjectTask/AddProjectTask";
 
 class App extends React.Component {
   render() {
@@ -19,6 +21,12 @@ class App extends React.Component {
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/addProject" component={AddProject} />
             <Route exact path="/updateProject/:id" component={UpdateProject} />
+            <Route exact path="/projectBoard/:id" component={ProjectBoard} />
+            <Route
+              exact
+              path="/addProjectTask/:id"
+              component={AddProjectTask}
+            />
           </div>
         </Router>
       </Provider>

@@ -3,7 +3,7 @@ import { getProject, createProject } from "../../actions/projectActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classNames from "classnames";
-
+import { Link } from "react-router-dom";
 class UpdateProject extends Component {
   constructor() {
     super();
@@ -162,6 +162,10 @@ class UpdateProject extends Component {
                     type="submit"
                     className="btn btn-primary btn-block mt-4"
                   />
+                  &nbsp;
+                  <Link to={`/dashboard`} className="btn btn-secondary mt-4">
+                    Back to Project Board
+                  </Link>
                 </form>
               </div>
             </div>
