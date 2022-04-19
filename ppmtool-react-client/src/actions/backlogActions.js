@@ -24,9 +24,16 @@ export const createProjectTask =
   };
 
 export const getBacklog = (projectIdentifier) => async (dispatch) => {
-  const res = await axios.get(`/api/backlog/${projectIdentifier}`);
-  dispatch({
-    type: GET_BACKLOG,
-    payload: res.data,
-  });
+  try {
+    const res = await axios.get(`/api/backlog/${projectIdentifier}`);
+    dispatch({
+      type: GET_BACKLOG,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
 };
