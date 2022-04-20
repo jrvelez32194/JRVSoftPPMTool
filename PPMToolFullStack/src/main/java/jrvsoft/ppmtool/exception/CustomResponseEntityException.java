@@ -31,4 +31,16 @@ public class CustomResponseEntityException extends ResponseEntityExceptionHandle
         PriorityExceptionResponse priorityExceptionResponse = new PriorityExceptionResponse(ex.getMessage());
         return  new ResponseEntity(priorityExceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleExceptionUsernameAlreadyExist(UsernmaneAlreadyExistException ex, WebRequest webRequest){
+        UsernameAlreadyExistResponse usernameAlreadyExistResponse = new UsernameAlreadyExistResponse(ex.getMessage());
+        return  new ResponseEntity(usernameAlreadyExistResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleExceptionUsernameNotExist(UsernmaneNotExistException ex, WebRequest webRequest){
+        UsernameNotExistResponse usernameNotExistResponse = new UsernameNotExistResponse(ex.getMessage());
+        return  new ResponseEntity(usernameNotExistResponse, HttpStatus.BAD_REQUEST);
+    }
 }

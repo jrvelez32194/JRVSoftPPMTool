@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjectService {
-    public Project saveOrUpdate(Project project);
-    public Optional<Project> findByProjectIdentifier(String projectIdentifier);
-    public List<Project> listOfProject();
-    public void deleteProject(String projectIdentifier);
+     Project saveOrUpdate(Project project);
+     Optional<Project> findByProjectIdentifier(String projectIdentifier);
+     List<Project> listOfProject();
+     void deleteProject(String projectIdentifier);
 }

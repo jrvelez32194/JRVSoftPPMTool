@@ -2,7 +2,9 @@ package jrvsoft.ppmtool.services;
 
 import jrvsoft.ppmtool.domain.User;
 
-public interface UserService {
+import java.util.Optional;
 
-    public User saveUser(User user);
+public interface UserService {
+     User saveUser(User user);
+     User  findByUsername(String username);
 }
