@@ -4,6 +4,7 @@ import jrvsoft.ppmtool.domain.User;
 import jrvsoft.ppmtool.exception.UsernmaneAlreadyExistException;
 import jrvsoft.ppmtool.exception.UsernmaneNotExistException;
 import jrvsoft.ppmtool.repositories.UserRepository;
+import jrvsoft.ppmtool.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class UserServiceImpl implements  UserService{
         }
 
         user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setConfirmPassword("");
         return userRepository.save(user);
     }
 
