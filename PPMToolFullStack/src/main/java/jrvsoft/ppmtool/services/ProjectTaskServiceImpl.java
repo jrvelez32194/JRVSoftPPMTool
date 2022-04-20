@@ -2,20 +2,23 @@ package jrvsoft.ppmtool.services;
 
 import jrvsoft.ppmtool.domain.Backlog;
 import jrvsoft.ppmtool.domain.ProjectTask;
-import jrvsoft.ppmtool.exception.Exception;
+import jrvsoft.ppmtool.exception.PriorityException;
+import jrvsoft.ppmtool.exception.ProjectIdentifierException;
+import jrvsoft.ppmtool.exception.ProjectSequenceException;
 import jrvsoft.ppmtool.repositories.BacklogRepository;
 import jrvsoft.ppmtool.repositories.ProjectTaskRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.Iterator;
 import java.util.List;
 
 @Transactional
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProjectTaskServiceImpl implements ProjectTaskService {
 
     private final BacklogRepository backlogRepository;
@@ -27,7 +30,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
 
         Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
         if (backlog == null) {
-            throw new Exception("Project Identifier not found");
+            throw new ProjectIdentifierException("Project Identifier not found");
         }
         projectTask.setBacklog(backlog);
 
@@ -65,7 +68,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
         ProjectTask projectTask = getProjectTaskByProjectSequence(projectSequence);
 
         if (!ObjectUtils.nullSafeEquals(projectIdentifier, projectTask.getProjectIdentifier())) {
-            throw new Exception("Invalid Project Identifier '" + projectIdentifier + "'");
+            throw new ProjectIdentifierException("Invalid Project Identifier '" + projectIdentifier + "'");
         }
 
         return projectTaskRepository.findByProjectSequence(projectSequence);
@@ -75,17 +78,17 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     public ProjectTask getProjectTaskByProjectSequence(String projectSequence) {
         ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence);
         if (ObjectUtils.isEmpty(projectTask)) {
-            throw new Exception("Project Task  with ID '" + projectSequence + "' does not exist");
+            throw new ProjectSequenceException("Project Task  with ID '" + projectSequence + "' does not exist");
         }
         return projectTask;
     }
 
     @Override
     public ProjectTask updateByProject(ProjectTask updateProjectTask, String projectIdentifier, String projectSequence) {
-
         // check if project task does exist under projectIdentifier
         getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence);
-
+        if (ObjectUtils.nullSafeEquals(updateProjectTask.getPriority(), 0))
+            throw new PriorityException("Invalid Priority");
         // do save
         return projectTaskRepository.save(updateProjectTask);
     }

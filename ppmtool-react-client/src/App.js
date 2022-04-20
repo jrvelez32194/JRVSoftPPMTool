@@ -10,6 +10,7 @@ import React from "react";
 import UpdateProject from "./component/Project/UpdateProject";
 import ProjectBoard from "./component/ProjectBoard/ProjectBoard";
 import AddProjectTask from "./component/ProjectBoard/ProjectTask/AddProjectTask";
+import UpdateProjectTask from "./component/ProjectBoard/ProjectTask/UpdateProjectTask";
 
 class App extends React.Component {
   render() {
@@ -26,6 +27,11 @@ class App extends React.Component {
               exact
               path="/addProjectTask/:id"
               component={AddProjectTask}
+            />
+            <Route
+              exact
+              path="/updateProjectTask/:backlog_id/:pt_id"
+              component={UpdateProjectTask}
             />
           </div>
         </Router>

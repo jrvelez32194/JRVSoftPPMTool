@@ -15,8 +15,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomResponseEntityException extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleException(Exception ex, WebRequest webRequest){
-        ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
-            return  new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    public final ResponseEntity<Object> handleException(ProjectIdentifierException ex, WebRequest webRequest){
+        ProjectIdentifierExceptionResponse projectIdentifierExceptionResponse = new ProjectIdentifierExceptionResponse(ex.getMessage());
+            return  new ResponseEntity(projectIdentifierExceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleExceptionSequence(ProjectSequenceException ex, WebRequest webRequest){
+        ProjectSequenceExceptionResponse projectSequenceExceptionResponse = new ProjectSequenceExceptionResponse(ex.getMessage());
+        return  new ResponseEntity(projectSequenceExceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleExceptionPriority(PriorityException ex, WebRequest webRequest){
+        PriorityExceptionResponse priorityExceptionResponse = new PriorityExceptionResponse(ex.getMessage());
+        return  new ResponseEntity(priorityExceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
