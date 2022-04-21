@@ -1,7 +1,7 @@
 package jrvsoft.ppmtool.payload;
 
 public class JWTLoginSuccessResponse {
-    private  boolean success;
+    private boolean success;
     private String token;
 
     public JWTLoginSuccessResponse(boolean success, String token) {
@@ -27,7 +27,7 @@ public class JWTLoginSuccessResponse {
 
     @Override
     public String toString() {
-        return "JWTLoginSuccessResponse{" +
+        return "JWTLoginSucessReponse{" +
                 "success=" + success +
                 ", token='" + token + '\'' +
                 '}';

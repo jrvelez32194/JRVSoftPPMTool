@@ -1,7 +1,9 @@
 package jrvsoft.ppmtool.payload;
 
+import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotBlank;
 
+@Component
 public class LoginRequest {
 
     @NotBlank(message = "Username cannot be blank")
