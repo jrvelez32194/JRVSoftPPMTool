@@ -2,9 +2,11 @@ package jrvsoft.ppmtool.services;
 
 import jrvsoft.ppmtool.domain.Backlog;
 import jrvsoft.ppmtool.domain.Project;
+import jrvsoft.ppmtool.domain.User;
 import jrvsoft.ppmtool.exception.ProjectIdentifierException;
 import jrvsoft.ppmtool.repositories.BacklogRepository;
 import jrvsoft.ppmtool.repositories.ProjectRepository;
+import jrvsoft.ppmtool.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,21 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final BacklogRepository backlogRepository;
+    private final UserService userService;
 
     @Override
-    public Project saveOrUpdate(Project project) {
+    public Project saveOrUpdate(Project project, String username) {
+
+        // find user by username
+       User user =  userService.findByUsername(username);
+
         String identifier = project.getProjectIdentifier().toUpperCase();
         project.setProjectIdentifier(identifier);
+
+        // set user
+        project.setUser(user);
+        project.setProjectLeader(user.getUsername());
+
         if (project.getId() == null) {
 
             if(projectRepository.findByProjectIdentifier(project.getProjectIdentifier()).isPresent()) {

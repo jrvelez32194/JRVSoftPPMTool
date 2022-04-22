@@ -4,6 +4,7 @@ import jrvsoft.ppmtool.domain.Project;
 import jrvsoft.ppmtool.services.MapValidationErrorService;
 import jrvsoft.ppmtool.services.ProjectService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/project")
@@ -29,12 +32,13 @@ public class ProjectController {
     private final MapValidationErrorService mapValidationErrorService;
 
     @PostMapping()
-    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
+    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project
+            , BindingResult result, Principal principal){
 
          ResponseEntity<?> errorMap = mapValidationErrorService.getMapValidationError(result);
          if(errorMap!=null) return errorMap;
 
-        return new ResponseEntity<Project>(projectService.saveOrUpdate(project), HttpStatus.CREATED);
+        return new ResponseEntity<Project>(projectService.saveOrUpdate(project, principal.getName()), HttpStatus.CREATED);
 
     }
 
