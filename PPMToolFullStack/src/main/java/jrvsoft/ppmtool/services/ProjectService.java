@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface ProjectService {
 
-     Project saveOrUpdate(Project project, String username);
-     Optional<Project> findByProjectIdentifier(String projectIdentifier);
-     List<Project> listOfProject();
-     void deleteProject(String projectIdentifier);
+     Project saveOrUpdate(Project project, String projectLeader);
+     Optional<Project> findByProjectIdentifierAndProjectLeader(String projectIdentifier, String projectLeader);
+     Iterable<Project> listOfProject(String projectLeader);
+     void deleteProject(String projectIdentifier, String projectLeader);
 }

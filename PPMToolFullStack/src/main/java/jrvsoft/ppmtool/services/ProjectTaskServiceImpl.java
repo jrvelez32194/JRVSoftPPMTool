@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.security.Principal;
 import java.util.List;
 
 @Transactional
@@ -55,15 +56,15 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     }
 
     @Override
-    public List<ProjectTask> listOfProjectTask(String projectIdentifier) {
-        projectService.findByProjectIdentifier(projectIdentifier);
+    public List<ProjectTask> listOfProjectTask(String projectIdentifier, String username) {
+        projectService.findByProjectIdentifierAndProjectLeader(projectIdentifier, username);
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
     }
 
     @Override
-    public ProjectTask getProjectTaskByProjectIdentifierByProjectSequence(String projectIdentifier, String projectSequence) {
+    public ProjectTask getProjectTaskByProjectIdentifierByProjectSequence(String projectIdentifier, String projectSequence, String username) {
 
-        projectService.findByProjectIdentifier(projectIdentifier);
+        projectService.findByProjectIdentifierAndProjectLeader(projectIdentifier, username);
 
         ProjectTask projectTask = getProjectTaskByProjectSequence(projectSequence);
 
@@ -84,9 +85,11 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     }
 
     @Override
-    public ProjectTask updateByProject(ProjectTask updateProjectTask, String projectIdentifier, String projectSequence) {
+    public ProjectTask updateByProject(ProjectTask updateProjectTask,
+                                       String projectIdentifier, String projectSequence
+            , String username) {
         // check if project task does exist under projectIdentifier
-        getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence);
+        getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence, username);
         if (ObjectUtils.nullSafeEquals(updateProjectTask.getPriority(), 0))
             throw new PriorityException("Invalid Priority");
         // do save
@@ -94,10 +97,10 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     }
 
     @Override
-    public void deleteProjectTask(String projectIdentifier, String projectSequence) {
+    public void deleteProjectTask(String projectIdentifier, String projectSequence, String username) {
 
         // check if project task does exist under projectIdentifier
-        ProjectTask projectTask = getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence);
+        ProjectTask projectTask = getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence, username);
 
         projectTaskRepository.delete(projectTask);
     }

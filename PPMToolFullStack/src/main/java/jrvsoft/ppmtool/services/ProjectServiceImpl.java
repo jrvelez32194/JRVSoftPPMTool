@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         if (project.getId() == null) {
 
-            if(projectRepository.findByProjectIdentifier(project.getProjectIdentifier()).isPresent()) {
+            if(projectRepository.findByProjectIdentifierAndProjectLeader(project.getProjectIdentifier(), username).isPresent()) {
                 throw new ProjectIdentifierException("Already Exist");
             }
 
@@ -57,8 +57,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Optional<Project> findByProjectIdentifier(String projectIdentifier) {
-        Optional<Project> project = projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
+    public Optional<Project> findByProjectIdentifierAndProjectLeader(String projectIdentifier, String projectLeader) {
+        Optional<Project> project = projectRepository.findByProjectIdentifierAndProjectLeader(projectIdentifier.toUpperCase(), projectLeader);
         if (!project.isPresent()) {
             throw new ProjectIdentifierException("Project Identifier " + projectIdentifier + " is not found");
         }
@@ -66,13 +66,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> listOfProject() {
-        return projectRepository.findAll();
+    public Iterable<Project> listOfProject(String projectLeader) {
+        return projectRepository.findAllByProjectLeader(projectLeader);
     }
 
     @Override
-    public void deleteProject(String projectIdentifier) {
-        Project project = findByProjectIdentifier(projectIdentifier).get();
+    public void deleteProject(String projectIdentifier, String projectLeader) {
+        Project project = findByProjectIdentifierAndProjectLeader(projectIdentifier, projectLeader).get();
         projectRepository.delete(project);
     }
 }

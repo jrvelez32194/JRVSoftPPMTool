@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,30 +40,32 @@ public class BacklogController {
     }
 
     @GetMapping("/{projectIdentifier}")
-    public Iterable<ProjectTask> listOfProjectTask(@PathVariable String projectIdentifier) {
-        return projectTaskService.listOfProjectTask(projectIdentifier);
+    public Iterable<ProjectTask> listOfProjectTask(@PathVariable String projectIdentifier, Principal principal) {
+        return projectTaskService.listOfProjectTask(projectIdentifier, principal.getName());
     }
 
     @GetMapping("/{projectIdentifier}/{projectSequence}")
-    public ResponseEntity<?> getProjectTask(@PathVariable String projectIdentifier, @PathVariable  String projectSequence){
-        return new ResponseEntity<ProjectTask>(projectTaskService.getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence), HttpStatus.OK);
+    public ResponseEntity<?> getProjectTask(@PathVariable String projectIdentifier, @PathVariable  String projectSequence, Principal principal){
+        return new ResponseEntity<ProjectTask>(projectTaskService.getProjectTaskByProjectIdentifierByProjectSequence(projectIdentifier, projectSequence, principal.getName()), HttpStatus.OK);
     }
 
     @PatchMapping("/{projectIdentifier}/{projectSequence}")
     public ResponseEntity<?> updateProjectTask(@Valid @RequestBody ProjectTask projectTask ,BindingResult result,
                                                @PathVariable String projectIdentifier,
-                                               @PathVariable String projectSequence
+                                               @PathVariable String projectSequence,
+                                               Principal principal
                                                ) {
         ResponseEntity<?> errorMap = mapValidationErrorService.getMapValidationError(result);
         if (errorMap != null) return errorMap;
 
-        return new ResponseEntity<ProjectTask>(projectTaskService.updateByProject(projectTask, projectIdentifier, projectSequence), HttpStatus.OK);
+        return new ResponseEntity<ProjectTask>(projectTaskService.updateByProject(projectTask, projectIdentifier, projectSequence, principal.getName()), HttpStatus.OK);
     }
 
     @DeleteMapping("/{projectIdentifier}/{projectSequence}")
     public ResponseEntity<?> deleteProjectTask(@PathVariable String projectIdentifier,
-                                               @PathVariable String projectSequence){
-        projectTaskService.deleteProjectTask(projectIdentifier, projectSequence);
+                                               @PathVariable String projectSequence,
+                                               Principal principal){
+        projectTaskService.deleteProjectTask(projectIdentifier, projectSequence, principal.getName());
         return new ResponseEntity<String>("Successfully Deleted", HttpStatus.OK);
     }
 
