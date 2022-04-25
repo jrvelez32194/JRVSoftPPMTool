@@ -1,6 +1,7 @@
 package jrvsoft.ppmtool.services;
 
 import jrvsoft.ppmtool.domain.Backlog;
+import jrvsoft.ppmtool.domain.Project;
 import jrvsoft.ppmtool.domain.ProjectTask;
 import jrvsoft.ppmtool.exception.PriorityException;
 import jrvsoft.ppmtool.exception.ProjectIdentifierException;
@@ -27,12 +28,19 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     private final ProjectService projectService;
 
     @Override
-    public ProjectTask addProject(String projectIdentifier, ProjectTask projectTask) {
+    public ProjectTask addProject(String projectIdentifier, ProjectTask projectTask, String username) {
+
 
         Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
         if (backlog == null) {
             throw new ProjectIdentifierException("Project Identifier not found");
         }
+
+        Project project = projectService.findByProjectIdentifier(projectIdentifier).get();
+        if (!ObjectUtils.nullSafeEquals(project.getProjectLeader(), username)) {
+            throw new ProjectIdentifierException("Project not found in your account");
+        }
+
         projectTask.setBacklog(backlog);
 
         Integer backlogSequence = backlog.getPTSequence();
@@ -44,7 +52,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
         projectTask.setProjectIdentifier(projectIdentifier);
 
         // set initial priority
-        if (ObjectUtils.isEmpty(projectTask.getPriority())) {
+        if (ObjectUtils.isEmpty(projectTask.getPriority()) || projectTask.getPriority() == 0) {
             projectTask.setPriority(3);
         }
         // set initial status

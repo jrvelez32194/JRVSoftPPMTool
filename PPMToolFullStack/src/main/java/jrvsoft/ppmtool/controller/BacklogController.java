@@ -31,12 +31,13 @@ public class BacklogController {
     @PostMapping("/{projectIdentifier}")
     public ResponseEntity<?> addProjectTask(@PathVariable String projectIdentifier,
                                             @Valid @RequestBody ProjectTask projectTask,
-                                            BindingResult result) {
+                                            BindingResult result,
+                                            Principal principal) {
 
         ResponseEntity<?> errorMap = mapValidationErrorService.getMapValidationError(result);
         if (errorMap != null) return errorMap;
 
-        return new ResponseEntity<ProjectTask>(projectTaskService.addProject(projectIdentifier, projectTask), HttpStatus.CREATED);
+        return new ResponseEntity<ProjectTask>(projectTaskService.addProject(projectIdentifier, projectTask, principal.getName()), HttpStatus.CREATED);
     }
 
     @GetMapping("/{projectIdentifier}")

@@ -43,4 +43,10 @@ public class CustomResponseEntityException extends ResponseEntityExceptionHandle
         UsernameNotExistResponse usernameNotExistResponse = new UsernameNotExistResponse(ex.getMessage());
         return  new ResponseEntity(usernameNotExistResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleExceptionProjectIdNotExist(ProjectIdException ex, WebRequest webRequest){
+        ProjectIdExceptionResponse projectIdExceptionResponse = new ProjectIdExceptionResponse(ex.getMessage());
+        return  new ResponseEntity(projectIdExceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }
