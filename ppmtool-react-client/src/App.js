@@ -11,7 +11,9 @@ import UpdateProject from "./component/Project/UpdateProject";
 import ProjectBoard from "./component/ProjectBoard/ProjectBoard";
 import AddProjectTask from "./component/ProjectBoard/ProjectTask/AddProjectTask";
 import UpdateProjectTask from "./component/ProjectBoard/ProjectTask/UpdateProjectTask";
-
+import Landing from "./component/Layout/Landing";
+import Register from "./component/UserManagement/Register";
+import Login from "./component/UserManagement/Login";
 class App extends React.Component {
   render() {
     return (
@@ -19,6 +21,16 @@ class App extends React.Component {
         <Router>
           <div className="App">
             <Header />
+            {
+              // PUBLIC ROUTES
+            }
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+
+            {
+              // PRIVATE ROUTES
+            }
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/addProject" component={AddProject} />
             <Route exact path="/updateProject/:id" component={UpdateProject} />
