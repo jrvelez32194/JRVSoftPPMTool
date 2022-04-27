@@ -18,7 +18,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Transactional
-@Service
+@Service    
 @RequiredArgsConstructor
 @Slf4j
 public class ProjectTaskServiceImpl implements ProjectTaskService {
