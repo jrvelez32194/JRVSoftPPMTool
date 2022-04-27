@@ -17,11 +17,17 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-        if (user.getPassword().length() < 6) {
-            errors.rejectValue("password", "length", "password must be at least 6 characters");
-        }
-        if (!ObjectUtils.nullSafeEquals(user.getPassword(), user.getConfirmPassword())) {
-            errors.rejectValue("confirmPassword", "Match", "password must match");
+        if (user.getPassword() == null) {
+            errors.rejectValue("password", "Null", "password must required");
+        } else if (user.getConfirmPassword() == null) {
+            errors.rejectValue("confirmPassword", "Null", "Confirm password must required");
+        } else {
+            if (user.getPassword().length() < 6) {
+                errors.rejectValue("password", "length", "password must be at least 6 characters");
+            }
+            if (!ObjectUtils.nullSafeEquals(user.getPassword(), user.getConfirmPassword())) {
+                errors.rejectValue("confirmPassword", "Match", "password must match");
+            }
         }
     }
 }
