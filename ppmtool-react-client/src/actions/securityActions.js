@@ -20,7 +20,7 @@ export const createUser = (newUser, history) => async (dispatch) => {
   }
 };
 
-export const login = (LogRequest) => async (dispatch) => {
+export const login = (LogRequest, history) => async (dispatch) => {
   try {
     const res = await axios.post("/api/user/login", LogRequest);
     const { token } = res.data;
@@ -31,6 +31,7 @@ export const login = (LogRequest) => async (dispatch) => {
       type: SET_CURRENT_USER,
       payload: decoded,
     });
+    history.push("/dashboard");
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
