@@ -70,7 +70,7 @@ class Header extends Component {
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
         <div className="container">
-          <Link to={"/dashboard"} className="navbar-brand">
+          <Link to={"/"} className="navbar-brand">
             Personal Project Management Tool
           </Link>
           <button
