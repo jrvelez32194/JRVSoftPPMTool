@@ -55,7 +55,7 @@ class Register extends Component {
               <h1 className="display-4 text-center">Sign Up</h1>
               <p className="lead text-center">Create your Account</p>
               <form onSubmit={this.onSubmit}>
-                <div className="form-group">
+                <div className="form-group mb-2">
                   <input
                     type="text"
                     className={classNames("form-control form-control-lg", {
@@ -70,8 +70,7 @@ class Register extends Component {
                     <div className="invalid-feedback">{errors.fullName}</div>
                   )}
                 </div>
-                &nbsp;
-                <div className="form-group">
+                <div className="form-group mb-2">
                   <input
                     type="text"
                     className={classNames("form-control form-control-lg", {
@@ -86,8 +85,7 @@ class Register extends Component {
                     <div className="invalid-feedback">{errors.username}</div>
                   )}
                 </div>
-                &nbsp;
-                <div className="form-group">
+                <div className="form-group mb-2">
                   <input
                     type="password"
                     className={classNames("form-control form-control-lg", {
@@ -102,7 +100,6 @@ class Register extends Component {
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                 </div>
-                &nbsp;
                 <div className="form-group">
                   <input
                     type="password"
@@ -120,8 +117,10 @@ class Register extends Component {
                     </div>
                   )}
                 </div>
-                &nbsp;
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input
+                  type="submit"
+                  className="btn btn-success btn-block mt-4"
+                />
               </form>
             </div>
           </div>

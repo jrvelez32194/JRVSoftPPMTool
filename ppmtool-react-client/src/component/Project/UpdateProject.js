@@ -160,7 +160,7 @@ class UpdateProject extends Component {
                   <br />
                   <input
                     type="submit"
-                    className="btn btn-primary btn-block mt-4"
+                    className="btn btn-success btn-block mt-4"
                   />
                   &nbsp;
                   <Link to={`/dashboard`} className="btn btn-secondary mt-4">

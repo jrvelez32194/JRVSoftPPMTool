@@ -7,6 +7,12 @@ const ProjectBoardBacklogAlgo = (errors, project_tasks) => {
           {errors.message}
         </div>
       );
+    } else if (errors.projectIdentifier) {
+      return (
+        <div className="alert alert-danger text-center" role="alert">
+          {errors.projectIdentifier}
+        </div>
+      );
     } else {
       return (
         <div className="alert alert-info text-center" role="alert">
@@ -18,5 +24,4 @@ const ProjectBoardBacklogAlgo = (errors, project_tasks) => {
     return <Backlog project_tasks_prop={project_tasks} />;
   }
 };
-
 export default ProjectBoardBacklogAlgo;

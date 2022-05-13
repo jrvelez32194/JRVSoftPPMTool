@@ -51,7 +51,7 @@ class Login extends Component {
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Log In</h1>
               <form onSubmit={this.onSubmit}>
-                <div className="form-group">
+                <div className="form-group mb-2">
                   <input
                     type="text"
                     className={classNames("form-control form-control-lg", {
@@ -81,7 +81,10 @@ class Login extends Component {
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                 </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input
+                  type="submit"
+                  className="btn btn-success btn-block mt-4"
+                />
               </form>
             </div>
           </div>

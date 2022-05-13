@@ -14,15 +14,12 @@ class Header extends Component {
 
     const userIsAuthenticated = (
       <div className="collapse navbar-collapse" id="mobile-nav">
-        <ul className="navbar-nav mr-auto">
+        <ul className="navbar-nav ms-auto">
           <li className="nav-item">
             <Link className="nav-link" to="/dashboard">
               Dashboard
             </Link>
           </li>
-        </ul>
-
-        <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link className="nav-link" to="/dashboard">
               <i className="fas fa-user-circle mr-1" />
@@ -44,13 +41,13 @@ class Header extends Component {
 
     const userIsNotAuthenticated = (
       <div className="collapse navbar-collapse" id="mobile-nav">
-        <ul className="navbar-nav ml-auto">
+        <ul className="navbar-nav ms-auto">
           <li className="nav-item">
             <Link className="nav-link" to="/register">
               Sign Up
             </Link>
           </li>
-          <li className="nav-item">
+          <li className="form-inline my-2 my-lg-0">
             <Link className="nav-link" to="/login">
               Login
             </Link>
@@ -68,10 +65,10 @@ class Header extends Component {
     }
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-success mb-4">
         <div className="container">
           <Link to={"/"} className="navbar-brand">
-            Personal Project Management Tool
+            Work Flow Management Tool
           </Link>
           <button
             className="navbar-toggler"
