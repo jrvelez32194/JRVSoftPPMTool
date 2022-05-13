@@ -27,7 +27,7 @@ class ProjectTask extends Component {
     return (
       <div className="card mb-1 bg-light">
         <div className={`card-header text-primary ${priorityCLass}`}>
-          ID: {project_task.projectSequence} -- Priority: {priorityString}
+          Priority: {priorityString}
         </div>
         <div className="card-body bg-light">
           <h5 className="card-title">{project_task.summary}</h5>

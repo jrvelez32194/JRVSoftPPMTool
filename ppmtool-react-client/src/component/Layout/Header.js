@@ -68,7 +68,7 @@ class Header extends Component {
       <nav className="navbar navbar-expand-sm navbar-dark bg-success mb-4">
         <div className="container">
           <Link to={"/"} className="navbar-brand">
-            Work Flow Management Tool
+            Project Management Tool
           </Link>
           <button
             className="navbar-toggler"
